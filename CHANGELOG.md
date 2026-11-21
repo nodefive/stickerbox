@@ -6,6 +6,8 @@
   pick the packs, and they arrive with names, authors, emojis and animations, fully editable.
 - Still stickers that other apps stored as two identical animation frames are recognised and
   kept as stills.
+- Merge two packs into one from the pack menu.
+- Packs larger than 30 stickers go to WhatsApp as "Name 1", "Name 2" instead of "Name 1/2".
 
 ## 1.0
 

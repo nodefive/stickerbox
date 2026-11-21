@@ -147,7 +147,7 @@ final class PackBuilder {
             // Animated and still parts get different identifiers: when a part changes type,
             // WhatsApp gets a new pack instead of a known pack switching type.
             part.id = pack.id + "_" + (part.animated ? "a" : "") + (i + 1);
-            part.name = clip(groups.size() == 1 ? pack.name : pack.name + " " + (i + 1) + "/" + groups.size());
+            part.name = clip(groups.size() == 1 ? pack.name : pack.name + " " + (i + 1));
             part.publisher = publisher;
             part.version = String.valueOf(pack.version);
             part.dir = new File(tmp, String.valueOf(i + 1));

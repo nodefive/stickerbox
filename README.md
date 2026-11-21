@@ -8,7 +8,7 @@ you add or share a pack.
 
 - **Your packs only.** No community feed, no account, no ads, no internet permission.
 - **Any size.** A pack can hold any number of stickers. WhatsApp allows 30 per pack, so larger
-  packs are added as "Name 1/3", "Name 2/3", ... automatically, in your sticker order.
+  packs are added as "Name 1", "Name 2", ... automatically, in your sticker order.
 - **Still and animated together.** Packs can mix both (see [How packs reach WhatsApp](#how-packs-reach-whatsapp)).
 - **WhatsApp and WhatsApp Business.** Choose one or both each time you add a pack.
 - **Editor:** move, zoom and rotate, cut as square, circle or freehand, caption with colours,

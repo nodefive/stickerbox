@@ -571,6 +571,7 @@ public class PackActivity extends Activity {
                 .item(R.drawable.ic_edit, getString(R.string.rename), this::rename)
                 .item(R.drawable.ic_person, getString(R.string.author), pack.author == null || pack.author.isEmpty()
                         ? getString(R.string.author_default, getString(R.string.app_name)) : pack.author, this::editAuthor)
+                .item(R.drawable.ic_move_pack, getString(R.string.merge), getString(R.string.merge_summary), this::mergeMenu)
                 .item(R.drawable.ic_export, getString(R.string.export), getString(R.string.export_summary), this::exportMenu)
                 .item(R.drawable.ic_share, getString(R.string.share_wastickers), getString(R.string.share_summary), this::share)
                 .danger(R.drawable.ic_delete, getString(R.string.delete_pack), () ->
@@ -581,6 +582,59 @@ public class PackActivity extends Activity {
                                     Ui.main(this::finish);
                                 })))
                 .show();
+    }
+
+    /** Moves every sticker of another pack into this one (after this pack's), then deletes it. */
+    private void mergeMenu() {
+        Ui.IO.execute(() -> {
+            List<Store.Pack> all = Store.all(this);
+            Ui.main(() -> {
+                Sheet sheet = new Sheet(this).title(getString(R.string.merge_into, pack.name));
+                int others = 0;
+                for (Store.Pack other : all) {
+                    if (other.id.equals(packId)) continue;
+                    others++;
+                    sheet.item(R.drawable.ic_folder, other.name, Ui.plural(this, R.plurals.stickers_count, other.stickers.size()), () ->
+                            Ui.confirm(this, getString(R.string.merge_q, other.name, pack.name),
+                                    getString(R.string.merge_body, other.name), getString(R.string.merge_button),
+                                    () -> merge(other.id)));
+                }
+                if (others == 0) Ui.toast(this, getString(R.string.merge_none));
+                else sheet.show();
+            });
+        });
+    }
+
+    private void merge(String otherId) {
+        Dialog d = Ui.progress(this, getString(R.string.merging));
+        Ui.IO.execute(() -> {
+            String msg;
+            try {
+                Store.Pack to = Store.load(this, packId);
+                Store.Pack from = Store.load(this, otherId);
+                if (to == null || from == null) throw new IOException(getString(R.string.pack_gone));
+                int moved = 0;
+                int dupes = 0;
+                for (Store.Sticker s : new ArrayList<>(from.stickers)) {
+                    if (Store.moveSticker(from, s, to)) moved++;
+                    else dupes++;
+                }
+                to.touch();
+                Store.save(to);
+                Store.delete(this, from);
+                getContentResolver().notifyChange(StickerProvider.METADATA_URI, null);
+                msg = getString(R.string.merge_done, Ui.plural(this, R.plurals.stickers_count, moved), from.name);
+                if (dupes > 0) msg += " " + Ui.plural(this, R.plurals.dupes_n, dupes) + ".";
+            } catch (IOException | RuntimeException e) {
+                msg = e.getMessage();
+            }
+            String m = msg;
+            Ui.main(() -> {
+                Ui.dismiss(d);
+                Ui.toastLong(this, m);
+                reload();
+            });
+        });
     }
 
     private void rename() {

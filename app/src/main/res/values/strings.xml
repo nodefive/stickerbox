@@ -78,6 +78,15 @@
     <string name="author_default">Not set (\"%1$s\" is used)</string>
     <string name="share_wastickers">Share as .wastickers</string>
     <string name="share_summary">For sticker apps that import .wastickers files</string>
+    <string name="merge">Merge with another pack</string>
+    <string name="merge_button">Merge</string>
+    <string name="merge_summary">Add another pack\'s stickers to this one</string>
+    <string name="merge_into">Merge into \"%1$s\"</string>
+    <string name="merge_q">Merge \"%1$s\" into \"%2$s\"?</string>
+    <string name="merge_body">Its stickers are added after the ones here, then \"%1$s\" is removed from StickerBox. If it is in WhatsApp, remove it there too.</string>
+    <string name="merge_none">There is no other pack to merge.</string>
+    <string name="merging">Merging…</string>
+    <string name="merge_done">%1$s added from \"%2$s\".</string>
     <string name="export">Export</string>
     <string name="export_summary">Save the pack to a folder as images or .wastickers</string>
     <string name="export_as">Export as</string>
