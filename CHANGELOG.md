@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2
+
+- Import several `.wastickers` files at once. Files named "00 Name", "01 Name", ... keep their
+  order in the pack list.
+- Packs imported from other sticker apps keep that app's order.
+
 ## 1.1
 
 - Import from other sticker apps (Sticker Maker and any app that offers packs to WhatsApp):

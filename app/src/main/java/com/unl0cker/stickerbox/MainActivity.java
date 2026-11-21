@@ -194,7 +194,10 @@ public class MainActivity extends Activity {
             int packs = 0;
             int stickers = 0;
             List<String> failed = new ArrayList<>();
-            for (OtherApps.RemotePack rp : chosen) {
+            // The list shows the newest pack first: import the last pack first to keep the app's order.
+            List<OtherApps.RemotePack> order = new ArrayList<>(chosen);
+            java.util.Collections.reverse(order);
+            for (OtherApps.RemotePack rp : order) {
                 try {
                     Store.Pack p = OtherApps.importPack(this, src, rp);
                     if (p == null) {
@@ -222,31 +225,91 @@ public class MainActivity extends Activity {
     // ---- .wastickers import ----
 
     private void pickImport() {
-        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*");
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
+                .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         startActivityForResult(i, REQ_IMPORT);
     }
 
     @Override
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
-        if (req == REQ_IMPORT && res == RESULT_OK && data != null && data.getData() != null) {
-            Uri uri = data.getData();
-            Dialog d = Ui.progress(this, getString(R.string.importing));
-            Ui.IO.execute(() -> {
-                try (InputStream in = getContentResolver().openInputStream(uri)) {
-                    Store.Pack p = Backup.importWastickers(this, in, getString(R.string.imported_pack));
-                    Ui.main(() -> {
-                        Ui.dismiss(d);
-                        openPack(p.id);
-                    });
-                } catch (IOException | RuntimeException e) {
-                    Ui.main(() -> {
-                        Ui.dismiss(d);
-                        Ui.message(this, getString(R.string.import_failed), e.getMessage());
-                    });
-                }
-            });
+        if (req != REQ_IMPORT || res != RESULT_OK || data == null) return;
+        List<Uri> uris = new ArrayList<>();
+        if (data.getClipData() != null) {
+            for (int i = 0; i < data.getClipData().getItemCount(); i++) uris.add(data.getClipData().getItemAt(i).getUri());
+        } else if (data.getData() != null) {
+            uris.add(data.getData());
         }
+        if (uris.isEmpty()) return;
+        if (uris.size() == 1) {
+            importFile(uris.get(0));
+        } else {
+            importFiles(uris);
+        }
+    }
+
+    private void importFile(Uri uri) {
+        Dialog d = Ui.progress(this, getString(R.string.importing));
+        Ui.IO.execute(() -> {
+            try (InputStream in = getContentResolver().openInputStream(uri)) {
+                Store.Pack p = Backup.importWastickers(this, in, getString(R.string.imported_pack));
+                Ui.main(() -> {
+                    Ui.dismiss(d);
+                    openPack(p.id);
+                });
+            } catch (IOException | RuntimeException e) {
+                Ui.main(() -> {
+                    Ui.dismiss(d);
+                    Ui.message(this, getString(R.string.import_failed), e.getMessage());
+                });
+            }
+        });
+    }
+
+    private void importFiles(List<Uri> uris) {
+        Dialog d = Ui.progress(this, Ui.plural(this, R.plurals.importing_packs, uris.size()));
+        Ui.IO.execute(() -> {
+            // Files numbered like "00 Name", "01 Name" keep their order: the list shows the newest
+            // pack first, so the last file is imported first.
+            Map<Uri, String> names = new HashMap<>();
+            for (Uri u : uris) names.put(u, displayName(u));
+            List<Uri> order = new ArrayList<>(uris);
+            order.sort((a, b) -> names.get(b).compareToIgnoreCase(names.get(a)));
+            int packs = 0;
+            int stickers = 0;
+            List<String> failed = new ArrayList<>();
+            for (Uri u : order) {
+                String name = names.get(u);
+                String fallback = name.replaceFirst("(?i)\\.wastickers$", "");
+                try (InputStream in = getContentResolver().openInputStream(u)) {
+                    Store.Pack p = Backup.importWastickers(this, in, fallback.isEmpty() ? getString(R.string.imported_pack) : fallback);
+                    packs++;
+                    stickers += p.stickers.size();
+                } catch (IOException | RuntimeException e) {
+                    failed.add(name + ": " + e.getMessage());
+                }
+            }
+            String msg = getString(R.string.import_done, Ui.plural(this, R.plurals.packs_count, packs),
+                    Ui.plural(this, R.plurals.stickers_count, stickers));
+            if (!failed.isEmpty()) msg += getString(R.string.import_failed_list, String.join("\n", failed));
+            String m = msg;
+            Ui.main(() -> {
+                Ui.dismiss(d);
+                Ui.message(this, getString(R.string.import_title), m);
+                reload();
+            });
+        });
+    }
+
+    private String displayName(Uri u) {
+        try (android.database.Cursor c = getContentResolver().query(u,
+                new String[]{android.provider.OpenableColumns.DISPLAY_NAME}, null, null, null)) {
+            if (c != null && c.moveToFirst() && !c.isNull(0)) return c.getString(0);
+        } catch (RuntimeException ignored) {
+            // fall back to the URI's last segment
+        }
+        String s = u.getLastPathSegment();
+        return s == null ? "" : s.substring(s.lastIndexOf('/') + 1);
     }
 
     // ---- images shared from other apps ----

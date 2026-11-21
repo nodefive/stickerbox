@@ -37,9 +37,9 @@
     <string name="delete_pack_body">The pack and all its images are deleted from StickerBox. WhatsApp keeps its own copy until you remove the pack there.</string>
     <string name="chip_added">In WhatsApp</string>
     <string name="chip_update">Update</string>
-    <string name="import_wastickers">.wastickers file</string>
+    <string name="import_wastickers">.wastickers files</string>
     <string name="import_title">Import</string>
-    <string name="import_file_summary">A pack file shared by a sticker app</string>
+    <string name="import_file_summary">Pack files from sticker apps; pick one or several</string>
     <string name="import_from_app">From another sticker app</string>
     <string name="import_from_app_summary">Packs from Sticker Maker and other WhatsApp sticker apps, fully editable here</string>
     <string name="import_looking">Looking for sticker apps…</string>

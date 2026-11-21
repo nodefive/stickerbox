@@ -17,8 +17,8 @@ you add or share a pack.
   its built-in packs) and add them to your packs, animated ones included.
 - **Import from other sticker apps** such as Sticker Maker: all their packs in one go, with
   names, emojis and animations, and fully editable here.
-- **Import** `.wastickers` files and images shared from any app; **export** a pack as a folder
-  of images or as `.wastickers`.
+- **Import** `.wastickers` files (several at once) and images shared from any app; **export** a
+  pack as a folder of images or as `.wastickers`.
 - **Backup and restore** of all packs as one `.zip` with the original images.
 
 ## How it works
