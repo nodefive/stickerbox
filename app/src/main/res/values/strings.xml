@@ -37,7 +37,21 @@
     <string name="delete_pack_body">The pack and all its images are deleted from StickerBox. WhatsApp keeps its own copy until you remove the pack there.</string>
     <string name="chip_added">In WhatsApp</string>
     <string name="chip_update">Update</string>
-    <string name="import_wastickers">Import .wastickers</string>
+    <string name="import_wastickers">.wastickers file</string>
+    <string name="import_title">Import</string>
+    <string name="import_file_summary">A pack file shared by a sticker app</string>
+    <string name="import_from_app">From another sticker app</string>
+    <string name="import_from_app_summary">Packs from Sticker Maker and other WhatsApp sticker apps, fully editable here</string>
+    <string name="import_looking">Looking for sticker apps…</string>
+    <string name="import_none_title">No sticker apps found</string>
+    <string name="import_none_body">No installed app offers sticker packs to WhatsApp.</string>
+    <string name="import_community_suffix">(community)</string>
+    <string name="import_choose">Packs in %1$s</string>
+    <string name="import_button">Import</string>
+    <string name="import_done">Imported %1$s with %2$s.</string>
+    <string name="import_failed_list">\n\nNot imported:\n%1$s</string>
+    <string name="import_pack_empty">%1$s: no stickers</string>
+    <string name="import_no_answer">%1$s did not send the pack.</string>
     <string name="imported_pack">Imported stickers</string>
     <string name="import_failed">Import failed</string>
 
@@ -183,6 +197,10 @@
     <string name="section_about">About</string>
     <string name="about_text">StickerBox %1$s\nYour stickers stay on this phone as plain images. WhatsApp\'s format is made only when you add or share a pack.</string>
 
+    <plurals name="importing_packs">
+        <item quantity="one">Importing %d pack…</item>
+        <item quantity="other">Importing %d packs…</item>
+    </plurals>
     <plurals name="stickers_count">
         <item quantity="one">%d sticker</item>
         <item quantity="other">%d stickers</item>

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1
+
+- Import from other sticker apps (Sticker Maker and any app that offers packs to WhatsApp):
+  pick the packs, and they arrive with names, authors, emojis and animations, fully editable.
+- Still stickers that other apps stored as two identical animation frames are recognised and
+  kept as stills.
+
 ## 1.0
 
 First release.

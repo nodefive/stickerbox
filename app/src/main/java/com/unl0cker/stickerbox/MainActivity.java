@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         super.onCreate(state);
         setContentView(R.layout.activity_main);
         Header h = new Header(this).title(getString(R.string.app_name));
-        h.action(R.drawable.ic_import, getString(R.string.import_wastickers), this::pickImport);
+        h.action(R.drawable.ic_import, getString(R.string.import_title), this::importMenu);
         h.action(R.drawable.ic_settings, getString(R.string.settings),
                 () -> startActivity(new Intent(this, SettingsActivity.class)));
 
@@ -138,6 +138,85 @@ public class MainActivity extends Activity {
                                     Ui.main(this::reload);
                                 })))
                 .show();
+    }
+
+    // ---- import ----
+
+    private void importMenu() {
+        new Sheet(this).title(getString(R.string.import_title))
+                .item(R.drawable.ic_chat, getString(R.string.import_from_app), getString(R.string.import_from_app_summary), this::importFromApps)
+                .item(R.drawable.ic_folder, getString(R.string.import_wastickers), getString(R.string.import_file_summary), this::pickImport)
+                .show();
+    }
+
+    private void importFromApps() {
+        Dialog d = Ui.progress(this, getString(R.string.import_looking));
+        Ui.IO.execute(() -> {
+            List<OtherApps.Source> sources = OtherApps.find(this);
+            Ui.main(() -> {
+                Ui.dismiss(d);
+                if (sources.isEmpty()) {
+                    Ui.message(this, getString(R.string.import_none_title), getString(R.string.import_none_body));
+                    return;
+                }
+                Sheet s = new Sheet(this).title(getString(R.string.import_from_app));
+                for (OtherApps.Source src : sources) {
+                    s.item(R.drawable.ic_chat, src.label, Ui.plural(this, R.plurals.packs_count, src.packs.size()), () -> choosePacks(src));
+                }
+                s.show();
+            });
+        });
+    }
+
+    private void choosePacks(OtherApps.Source src) {
+        String[] names = new String[src.packs.size()];
+        boolean[] checked = new boolean[names.length];
+        for (int i = 0; i < names.length; i++) {
+            OtherApps.RemotePack rp = src.packs.get(i);
+            names[i] = rp.publisher == null || rp.publisher.isEmpty() ? rp.name : rp.name + "  ·  " + rp.publisher;
+            checked[i] = true;
+        }
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(getString(R.string.import_choose, src.label))
+                .setMultiChoiceItems(names, checked, (dlg, which, on) -> checked[which] = on)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.import_button, (dlg, w) -> {
+                    List<OtherApps.RemotePack> chosen = new ArrayList<>();
+                    for (int i = 0; i < checked.length; i++) if (checked[i]) chosen.add(src.packs.get(i));
+                    if (!chosen.isEmpty()) importPacks(src, chosen);
+                })
+                .show();
+    }
+
+    private void importPacks(OtherApps.Source src, List<OtherApps.RemotePack> chosen) {
+        Dialog d = Ui.progress(this, Ui.plural(this, R.plurals.importing_packs, chosen.size()));
+        Ui.IO.execute(() -> {
+            int packs = 0;
+            int stickers = 0;
+            List<String> failed = new ArrayList<>();
+            for (OtherApps.RemotePack rp : chosen) {
+                try {
+                    Store.Pack p = OtherApps.importPack(this, src, rp);
+                    if (p == null) {
+                        failed.add(getString(R.string.import_pack_empty, rp.name));
+                    } else {
+                        packs++;
+                        stickers += p.stickers.size();
+                    }
+                } catch (IOException | RuntimeException e) {
+                    failed.add(rp.name + ": " + e.getMessage());
+                }
+            }
+            String msg = getString(R.string.import_done, Ui.plural(this, R.plurals.packs_count, packs),
+                    Ui.plural(this, R.plurals.stickers_count, stickers));
+            if (!failed.isEmpty()) msg += getString(R.string.import_failed_list, String.join("\n", failed));
+            String m = msg;
+            Ui.main(() -> {
+                Ui.dismiss(d);
+                Ui.message(this, getString(R.string.import_title), m);
+                reload();
+            });
+        });
     }
 
     // ---- .wastickers import ----

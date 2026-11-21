@@ -208,7 +208,8 @@ final class Store {
         Sticker s = new Sticker();
         s.id = newId();
         s.file = s.id + (info.webp ? ".webp" : ".png");
-        s.animated = info.animated && info.frames > 1;
+        // Two identical frames are a still in disguise (other sticker apps make these): keep it a still.
+        s.animated = info.animated && info.frames > 1 && !(info.frames == 2 && AnimatedWebp.isImposter(src));
         s.hash = hash;
         File dst = p.file(s);
         if (!p.stickersDir().isDirectory()) p.stickersDir().mkdirs();

@@ -4,10 +4,19 @@
     <!-- No permissions: images come from the system photo picker and file picker, WhatsApp's
          sticker folders through a folder the user approves once, backups through the file picker. -->
 
-    <!-- Package visibility: is WhatsApp / WhatsApp Business installed, and has it added a pack. -->
+    <!-- Import from other sticker apps: read their WhatsApp sticker providers. A normal permission
+         defined by WhatsApp, granted to any app that requests it. -->
+    <uses-permission android:name="com.whatsapp.sticker.READ" />
+
+    <!-- Package visibility: is WhatsApp / WhatsApp Business installed, and has it added a pack;
+         launcher apps, to find sticker apps to import from. -->
     <queries>
         <package android:name="com.whatsapp" />
         <package android:name="com.whatsapp.w4b" />
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
     </queries>
 
     <application

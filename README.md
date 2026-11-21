@@ -15,6 +15,8 @@ you add or share a pack.
   white, black or green outline.
 - **Stickers from your chats.** Browse the stickers WhatsApp keeps from your chats (and from
   its built-in packs) and add them to your packs, animated ones included.
+- **Import from other sticker apps** such as Sticker Maker: all their packs in one go, with
+  names, emojis and animations, and fully editable here.
 - **Import** `.wastickers` files and images shared from any app; **export** a pack as a folder
   of images or as `.wastickers`.
 - **Backup and restore** of all packs as one `.zip` with the original images.
@@ -50,10 +52,21 @@ WhatsApp requires and serves it through the sticker content provider described i
 | 96 x 96 PNG tray icon | Made from the sticker you mark as pack icon (or the first) |
 | At least one emoji per sticker | Uses your emojis, or 😀 when none are set |
 
-The built files live in `build/` in private storage, only the files listed for each part are
-served, and the provider is readable only by apps holding WhatsApp's
-`com.whatsapp.sticker.READ` permission. After you edit a pack, the app shows that WhatsApp has
-the previous version until you tap **Update in WhatsApp**.
+The built files live in `build/` in private storage and only the files listed for each part are
+served; your original images are never exposed. Reading the provider needs WhatsApp's
+`com.whatsapp.sticker.READ` permission, which is a normal permission: like the packs of every
+WhatsApp sticker app, the built copies can be read by any app that requests it. After you edit a
+pack, the app shows that WhatsApp has the previous version until you tap
+**Update in WhatsApp**.
+
+### Importing from other sticker apps
+
+Every WhatsApp sticker app offers its packs through the same provider interface, so StickerBox
+reads them the way WhatsApp does: **Import > From another sticker app** lists the installed apps
+that offer packs and the packs of each; the ones you tick become StickerBox packs with their
+names, authors, emojis and animations. Placeholder stickers that some apps add to small packs
+are skipped, and still stickers that an app disguised as two identical animation frames (to put
+them into animated packs) are stored as stills again.
 
 ### Stickers from WhatsApp
 
@@ -101,6 +114,8 @@ Android 11 or newer.
 | Permission | Why |
 |---|---|
 | Package visibility for `com.whatsapp` and `com.whatsapp.w4b` | whether WhatsApp is installed and has added a pack |
+| Package visibility for launcher apps | finding sticker apps to import from |
+| `com.whatsapp.sticker.READ` | reading other sticker apps' packs when you import them |
 
 No internet, storage, camera or other permissions. Images come from the system photo picker
 and file picker; WhatsApp's sticker folders and export folders through folders you choose.

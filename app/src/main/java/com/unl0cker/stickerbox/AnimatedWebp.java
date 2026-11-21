@@ -80,6 +80,52 @@ final class AnimatedWebp {
         throw new IOException("sticker does not fit in 500 KB");
     }
 
+    /**
+     * Whether an "animated" file is really a still: two frames that render the same picture
+     * (what sticker apps make to put still stickers into animated packs).
+     */
+    static boolean isImposter(File f) {
+        try {
+            Source s = parse(Files.readAllBytes(f.toPath()));
+            if (s.frames.size() != 2) return false;
+            SrcFrame a = s.frames.get(0);
+            SrcFrame b = s.frames.get(1);
+            // The second frame is the same picture in the same place. Compare the frames
+            // themselves: drawing a blended frame over itself thickens semi-transparent edges,
+            // so comparing the composed canvas would miss these.
+            if (a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h) {
+                if (java.util.Arrays.equals(a.webp, b.webp)) return true;
+                Bitmap ba = BitmapFactory.decodeByteArray(a.webp, 0, a.webp.length);
+                Bitmap bb = BitmapFactory.decodeByteArray(b.webp, 0, b.webp.length);
+                boolean same = ba != null && bb != null && ba.sameAs(bb);
+                if (ba != null) ba.recycle();
+                if (bb != null) bb.recycle();
+                if (same) return true;
+            }
+            // Or the second frame adds nothing: fully transparent and blended.
+            if (!b.noBlend) {
+                Bitmap bb = BitmapFactory.decodeByteArray(b.webp, 0, b.webp.length);
+                if (bb == null) return false;
+                boolean empty = true;
+                int[] row = new int[bb.getWidth()];
+                for (int y = 0; y < bb.getHeight() && empty; y++) {
+                    bb.getPixels(row, 0, bb.getWidth(), 0, y, bb.getWidth(), 1);
+                    for (int px : row) {
+                        if ((px >>> 24) != 0) {
+                            empty = false;
+                            break;
+                        }
+                    }
+                }
+                bb.recycle();
+                return empty;
+            }
+            return false;
+        } catch (IOException | RuntimeException | OutOfMemoryError e) {
+            return false;
+        }
+    }
+
     // ---- reading ----
 
     private static Source parse(byte[] b) throws IOException {
