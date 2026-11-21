@@ -4,6 +4,8 @@ Make your own WhatsApp sticker packs on Android, and keep them yours: every stic
 phone as a plain image, every pack stays editable, and WhatsApp's format is only produced when
 you add or share a pack.
 
+![Packs, a pack and the sticker editor](docs/screenshots.png)
+
 - **Your packs only.** No community feed, no account, no ads, no internet permission.
 - **Any size.** A pack can hold any number of stickers. WhatsApp allows 30 per pack, so larger
   packs are added as "Name 1/3", "Name 2/3", ... automatically, in your sticker order.
