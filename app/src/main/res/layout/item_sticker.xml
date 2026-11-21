@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.unl0cker.stickerbox.SquareFrame xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tile">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp"
+        android:scaleType="fitCenter" />
+
+    <View
+        android:id="@+id/selected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tile_selected"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/anim_badge"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="5dp"
+        android:background="@drawable/badge"
+        android:padding="3dp"
+        android:src="@drawable/ic_play"
+        android:tint="#FFFFFF"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/tray_badge"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="5dp"
+        android:background="@drawable/badge"
+        android:padding="3dp"
+        android:src="@drawable/ic_star"
+        android:tint="#FFD54F"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/check"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="top|start"
+        android:layout_margin="5dp"
+        android:visibility="gone" />
+</com.unl0cker.stickerbox.SquareFrame>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StickerBox</string>
+    <string name="share_target">Add to a sticker pack</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="whatsapp_business">WhatsApp Business</string>
+
+    <!-- common -->
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="more">More</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
+    <string name="rename">Rename</string>
+    <string name="share">Share</string>
+    <string name="settings">Settings</string>
+    <string name="error">Something went wrong</string>
+    <string name="note">Before adding</string>
+    <string name="continue_">Continue</string>
+    <string name="loading">Loading…</string>
+    <string name="adding">Adding stickers…</string>
+    <string name="saving">Saving…</string>
+    <string name="preparing">Preparing stickers…</string>
+    <string name="importing">Importing…</string>
+    <string name="nothing_readable">Those files could not be read.</string>
+
+    <!-- main -->
+    <string name="empty_title">No sticker packs yet</string>
+    <string name="empty_body">Tap + to create your first pack. Add photos, images or stickers from your WhatsApp chats.</string>
+    <string name="new_pack">New pack</string>
+    <string name="pack_name_hint">Pack name</string>
+    <string name="delete_pack">Delete pack</string>
+    <string name="delete_pack_q">Delete \"%1$s\"?</string>
+    <string name="delete_pack_body">The pack and all its images are deleted from StickerBox. WhatsApp keeps its own copy until you remove the pack there.</string>
+    <string name="chip_added">In WhatsApp</string>
+    <string name="chip_update">Update</string>
+    <string name="import_wastickers">Import .wastickers</string>
+    <string name="imported_pack">Imported stickers</string>
+    <string name="import_failed">Import failed</string>
+
+    <!-- pack -->
+    <string name="n_selected">%1$d selected</string>
+    <string name="add_stickers">Add stickers</string>
+    <string name="from_gallery">Gallery</string>
+    <string name="from_gallery_summary">Photos and images; one image opens the editor</string>
+    <string name="from_files">Files</string>
+    <string name="from_files_summary">Images and sticker files (.webp, .png) from any folder</string>
+    <string name="from_whatsapp">WhatsApp stickers</string>
+    <string name="from_whatsapp_summary">Stickers from your chats and from WhatsApp\'s own packs</string>
+    <string name="emojis">Emojis</string>
+    <string name="emojis_none">None set (😀 is used)</string>
+    <string name="emojis_hint">Up to 3 emojis, e.g. 😂🎉</string>
+    <string name="set_tray">Use as pack icon</string>
+    <string name="set_tray_summary">The small icon in WhatsApp\'s sticker tray</string>
+    <string name="move_to_front">Move to the front</string>
+    <string name="move_to_pack">Move to another pack</string>
+    <string name="moved_to">%1$s moved to %2$s</string>
+    <string name="delete_stickers_body">The images are deleted from StickerBox. WhatsApp keeps showing the old pack until you tap Update.</string>
+    <string name="author">Author</string>
+    <string name="author_hint">Your name</string>
+    <string name="author_default">Not set (\"%1$s\" is used)</string>
+    <string name="share_wastickers">Share as .wastickers</string>
+    <string name="share_summary">For sticker apps that import .wastickers files</string>
+    <string name="export">Export</string>
+    <string name="export_summary">Save the pack to a folder as images or .wastickers</string>
+    <string name="export_as">Export as</string>
+    <string name="export_images">Images</string>
+    <string name="export_images_summary">A folder named after the pack with the original images, in pack order</string>
+    <string name="export_wastickers">.wastickers file</string>
+    <string name="export_wastickers_summary">For sticker apps that import .wastickers (one file per 30 stickers)</string>
+    <string name="export_empty">The pack has no stickers to export.</string>
+    <string name="export_pick_hint">Choose where to save, then tap \"Use this folder\".</string>
+    <string name="exporting">Exporting…</string>
+    <string name="export_images_done">Saved %1$s in the folder \"%2$s\".</string>
+    <string name="export_files_done">Saved:\n\n%1$s</string>
+    <string name="export_failed">The export failed: %1$s</string>
+    <string name="export_cannot_create">Cannot create a folder there. Choose another folder.</string>
+    <string name="plan_need_more">WhatsApp needs at least 3 stickers in a pack. Add %1$d more.</string>
+    <string name="plan_split">%1$s go to WhatsApp as %2$d packs (WhatsApp allows 30 per pack).</string>
+    <string name="plan_one">Goes to WhatsApp as one pack.</string>
+    <string name="plan_mixed">Goes to WhatsApp as one animated pack. Still stickers look the same as here.</string>
+    <string name="stale_title">Remove old packs in WhatsApp</string>
+    <string name="stale_body">The pack is up to date. WhatsApp still has these older parts of it, which StickerBox no longer fills:\n\n%1$s\n\nRemove them in WhatsApp: open the sticker tray, tap +, then My stickers.</string>
+    <string name="add_to_whatsapp">Add to WhatsApp</string>
+    <string name="update_whatsapp">Update in WhatsApp</string>
+    <string name="add_again">Add to WhatsApp again</string>
+    <string name="status_not_added">Not in WhatsApp</string>
+    <string name="status_added">Added to %1$s</string>
+    <string name="status_both">WhatsApp and WhatsApp Business</string>
+    <string name="status_outdated">Changes are not in %1$s yet. Tap Update to send them.</string>
+    <string name="add_to_which">Add to which app?</string>
+    <string name="both">Both</string>
+    <string name="no_whatsapp">WhatsApp is not installed</string>
+    <string name="no_whatsapp_body">Install WhatsApp or WhatsApp Business to add sticker packs.</string>
+    <string name="cannot_add">Cannot add the pack</string>
+    <string name="cannot_share">Cannot share the pack</string>
+    <string name="whatsapp_too_old">%1$s did not accept the request. It may need an update.</string>
+    <string name="whatsapp_refused">%1$s refused the pack</string>
+    <string name="not_added">\"%1$s\" was not added.</string>
+    <string name="added_done">Added. The stickers are in WhatsApp\'s sticker tray.</string>
+    <string name="updated_done">Updated. WhatsApp loads the new stickers by itself.</string>
+    <string name="error_min_stickers">WhatsApp needs at least 3 stickers in a pack.</string>
+
+    <!-- editor -->
+    <string name="new_sticker">New sticker</string>
+    <string name="edit_sticker">Edit sticker</string>
+    <string name="tool_move">Move</string>
+    <string name="tool_cut">Cut</string>
+    <string name="tool_text">Text</string>
+    <string name="tool_outline">Outline</string>
+    <string name="fit">Fit</string>
+    <string name="fill">Fill</string>
+    <string name="rotate">Rotate 90°</string>
+    <string name="cut_none">Square</string>
+    <string name="cut_circle">Circle</string>
+    <string name="cut_free">Freehand</string>
+    <string name="add_text">Add text</string>
+    <string name="edit_text">Edit text</string>
+    <string name="text_hint">Text on the sticker</string>
+    <string name="outline_none">None</string>
+    <string name="outline_thin">Thin</string>
+    <string name="outline_medium">Medium</string>
+    <string name="outline_thick">Thick</string>
+    <string name="hint_move">Drag to move. Pinch to zoom and rotate.</string>
+    <string name="hint_cut">Choose a shape, or Freehand to draw your own.</string>
+    <string name="hint_cut_draw">Draw around what you want to keep. Two fingers still move the image.</string>
+    <string name="hint_text_add">Add a caption, then drag it into place.</string>
+    <string name="hint_text_edit">Drag to move, pinch to resize, tap to change the text.</string>
+    <string name="hint_outline">A border makes stickers stand out on any chat background.</string>
+    <string name="discard_q">Discard this sticker?</string>
+    <string name="discard_body">Your changes are not saved.</string>
+    <string name="discard">Discard</string>
+    <string name="cannot_open_image">Cannot open the image</string>
+    <string name="sticker_gone">The sticker no longer exists.</string>
+    <string name="pack_gone">The pack no longer exists.</string>
+    <string name="already_in_pack">That sticker is already in this pack.</string>
+
+    <!-- WhatsApp stickers picker -->
+    <string name="whatsapp_stickers">WhatsApp stickers</string>
+    <string name="source_chats">From chats</string>
+    <string name="source_saved">WhatsApp packs</string>
+    <string name="select_stickers">Tap stickers to select them</string>
+    <string name="add_n">Add %1$s</string>
+    <string name="access_title">Allow access to %1$s\'s stickers</string>
+    <string name="access_body">Android asks once which folder StickerBox may read. The picker opens at:\n\n%1$s\n\nTap \"Use this folder\", then Allow.</string>
+    <string name="choose_folder">Choose folder</string>
+    <string name="folder_not_found">The sticker folders were not found in %1$s.</string>
+    <string name="no_chat_stickers">No stickers from chats yet. Stickers you receive or send in WhatsApp appear here.</string>
+    <string name="no_saved_stickers">No stickers from WhatsApp\'s own packs here yet.</string>
+    <string name="wrong_folder">Wrong folder</string>
+    <string name="wrong_folder_body">The chosen folder does not contain WhatsApp\'s sticker folders. Choose:\n\n%1$s</string>
+
+    <!-- settings -->
+    <string name="section_packs">Packs</string>
+    <string name="default_author">Default author</string>
+    <string name="section_whatsapp">WhatsApp sticker folders</string>
+    <string name="whatsapp_stickers_folder">WhatsApp</string>
+    <string name="business_stickers_folder">WhatsApp Business</string>
+    <string name="folder_allowed">Access allowed</string>
+    <string name="folder_not_allowed">Not allowed yet. Tap to choose the folder</string>
+    <string name="folder_of">%1$s sticker folder</string>
+    <string name="choose_again">Choose the folder again</string>
+    <string name="remove_access">Remove access</string>
+    <string name="section_backup">Backup</string>
+    <string name="backup">Back up</string>
+    <string name="backup_summary">All packs with their original images and settings, as one .zip file</string>
+    <string name="backing_up">Backing up…</string>
+    <string name="backup_done">Saved %1$s.</string>
+    <string name="backup_failed">The backup failed: %1$s</string>
+    <string name="restore">Restore</string>
+    <string name="restore_summary">From a StickerBox .zip backup. Restored packs stay fully editable</string>
+    <string name="restore_q">Restore this backup?</string>
+    <string name="restore_body">Packs from the backup are added. A pack that is both here and in the backup is replaced by the backup copy. Other packs are kept.</string>
+    <string name="restoring">Restoring…</string>
+    <string name="restore_done">Restored %1$s: %2$s.\n\nTap Add to WhatsApp in each pack to send it to WhatsApp again.</string>
+    <string name="restore_nothing">The backup has no packs.</string>
+    <string name="restore_failed">The restore failed: %1$s</string>
+    <string name="error_not_backup">This is not a StickerBox backup.</string>
+    <string name="error_not_wastickers">No stickers found in this file.</string>
+    <string name="section_about">About</string>
+    <string name="about_text">StickerBox %1$s\nYour stickers stay on this phone as plain images. WhatsApp\'s format is made only when you add or share a pack.</string>
+
+    <plurals name="stickers_count">
+        <item quantity="one">%d sticker</item>
+        <item quantity="other">%d stickers</item>
+    </plurals>
+    <plurals name="packs_count">
+        <item quantity="one">%d pack</item>
+        <item quantity="other">%d packs</item>
+    </plurals>
+    <plurals name="add_images_to">
+        <item quantity="one">Add %d image to</item>
+        <item quantity="other">Add %d images to</item>
+    </plurals>
+    <plurals name="added_n">
+        <item quantity="one">Added %d sticker</item>
+        <item quantity="other">Added %d stickers</item>
+    </plurals>
+    <plurals name="dupes_n">
+        <item quantity="one">%d was already in the pack</item>
+        <item quantity="other">%d were already in the pack</item>
+    </plurals>
+    <plurals name="failed_n">
+        <item quantity="one">%d could not be read</item>
+        <item quantity="other">%d could not be read</item>
+    </plurals>
+    <plurals name="delete_n_q">
+        <item quantity="one">Delete this sticker?</item>
+        <item quantity="other">Delete %d stickers?</item>
+    </plurals>
+    <plurals name="note_bad_animated">
+        <item quantity="one">%d animated sticker does not meet WhatsApp\'s rules for animation (512 px, up to 500 KB and 10 s) and is added as a still image.</item>
+        <item quantity="other">%d animated stickers do not meet WhatsApp\'s rules for animation (512 px, up to 500 KB and 10 s) and are added as still images.</item>
+    </plurals>
+</resources>

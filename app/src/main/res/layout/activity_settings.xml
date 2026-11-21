@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="@string/section_packs" />
+
+            <LinearLayout
+                android:id="@+id/row_author"
+                style="@style/SettingRow">
+
+                <ImageView
+                    style="@style/SettingIcon"
+                    android:src="@drawable/ic_person" />
+
+                <LinearLayout style="@style/SettingText">
+
+                    <TextView
+                        style="@style/RowTitle"
+                        android:text="@string/default_author" />
+
+                    <TextView
+                        android:id="@+id/author_value"
+                        style="@style/RowSummary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="@string/section_whatsapp" />
+
+            <LinearLayout
+                android:id="@+id/row_wa"
+                style="@style/SettingRow">
+
+                <ImageView
+                    style="@style/SettingIcon"
+                    android:src="@drawable/ic_chat" />
+
+                <LinearLayout style="@style/SettingText">
+
+                    <TextView
+                        style="@style/RowTitle"
+                        android:text="@string/whatsapp_stickers_folder" />
+
+                    <TextView
+                        android:id="@+id/wa_value"
+                        style="@style/RowSummary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_w4b"
+                style="@style/SettingRow">
+
+                <ImageView
+                    style="@style/SettingIcon"
+                    android:src="@drawable/ic_chat" />
+
+                <LinearLayout style="@style/SettingText">
+
+                    <TextView
+                        style="@style/RowTitle"
+                        android:text="@string/business_stickers_folder" />
+
+                    <TextView
+                        android:id="@+id/w4b_value"
+                        style="@style/RowSummary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="@string/section_backup" />
+
+            <LinearLayout
+                android:id="@+id/row_backup"
+                style="@style/SettingRow">
+
+                <ImageView
+                    style="@style/SettingIcon"
+                    android:src="@drawable/ic_export" />
+
+                <LinearLayout style="@style/SettingText">
+
+                    <TextView
+                        style="@style/RowTitle"
+                        android:text="@string/backup" />
+
+                    <TextView
+                        style="@style/RowSummary"
+                        android:text="@string/backup_summary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/row_restore"
+                style="@style/SettingRow">
+
+                <ImageView
+                    style="@style/SettingIcon"
+                    android:src="@drawable/ic_import" />
+
+                <LinearLayout style="@style/SettingText">
+
+                    <TextView
+                        style="@style/RowTitle"
+                        android:text="@string/restore" />
+
+                    <TextView
+                        style="@style/RowSummary"
+                        android:text="@string/restore_summary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SectionLabel"
+                android:text="@string/section_about" />
+
+            <TextView
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingStart="72dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
