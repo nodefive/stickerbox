@@ -2,6 +2,9 @@
 
 ## 1.2
 
+- Import folders of images: pick a folder and each subfolder becomes a pack named after it
+  ("01 BAD" becomes "BAD", the number sets the order), with its images in file name order.
+- Animated GIFs become animated stickers instead of stills.
 - Import several `.wastickers` files at once. Files named "00 Name", "01 Name", ... keep their
   order in the pack list.
 - Packs imported from other sticker apps keep that app's order.

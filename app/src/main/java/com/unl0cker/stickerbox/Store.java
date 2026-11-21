@@ -207,6 +207,25 @@ final class Store {
         Images.Info info = Images.info(src);
         Sticker s = new Sticker();
         s.id = newId();
+        if (info.gif) {
+            // An animated GIF becomes an animated WebP; a single-frame GIF falls through to PNG.
+            byte[] anim = null;
+            try {
+                anim = AnimatedWebp.fromGif(src);
+            } catch (IOException | RuntimeException | OutOfMemoryError ignored) {
+                // stored as a still below
+            }
+            if (anim != null) {
+                s.file = s.id + ".webp";
+                s.animated = true;
+                s.hash = hash;
+                if (!p.stickersDir().isDirectory()) p.stickersDir().mkdirs();
+                writeAtomic(p.file(s), anim);
+                if (move) src.delete();
+                p.stickers.add(s);
+                return s;
+            }
+        }
         s.file = s.id + (info.webp ? ".webp" : ".png");
         // Two identical frames are a still in disguise (other sticker apps make these): keep it a still.
         s.animated = info.animated && info.frames > 1 && !(info.frames == 2 && AnimatedWebp.isImposter(src));

@@ -23,6 +23,7 @@ import java.util.Map;
 
 public class MainActivity extends Activity {
     private static final int REQ_IMPORT = 1;
+    private static final int REQ_FOLDERS = 2;
 
     private final List<Store.Pack> packs = new ArrayList<>();
     private final Map<String, WhatsApp.Status> statuses = new HashMap<>();
@@ -145,8 +146,50 @@ public class MainActivity extends Activity {
     private void importMenu() {
         new Sheet(this).title(getString(R.string.import_title))
                 .item(R.drawable.ic_chat, getString(R.string.import_from_app), getString(R.string.import_from_app_summary), this::importFromApps)
+                .item(R.drawable.ic_image, getString(R.string.import_folders), getString(R.string.import_folders_summary), this::pickFolders)
                 .item(R.drawable.ic_folder, getString(R.string.import_wastickers), getString(R.string.import_file_summary), this::pickImport)
                 .show();
+    }
+
+    // ---- folders of images ----
+
+    private void pickFolders() {
+        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), REQ_FOLDERS);
+    }
+
+    private void importFolders(Uri tree) {
+        Dialog d = Ui.progress(this, getString(R.string.importing));
+        Ui.IO.execute(() -> {
+            List<FolderImport.Folder> folders = FolderImport.scan(this, tree);
+            int packs = 0;
+            int stickers = 0;
+            List<String> failed = new ArrayList<>();
+            // The list shows the newest pack first: import the last folder first.
+            for (int i = folders.size() - 1; i >= 0; i--) {
+                FolderImport.Folder f = folders.get(i);
+                try {
+                    Store.Pack p = FolderImport.importFolder(this, f);
+                    if (p == null) {
+                        failed.add(getString(R.string.import_pack_empty, f.name));
+                    } else {
+                        packs++;
+                        stickers += p.stickers.size();
+                    }
+                } catch (IOException | RuntimeException e) {
+                    failed.add(f.name + ": " + e.getMessage());
+                }
+            }
+            String msg = folders.isEmpty() ? getString(R.string.import_folders_none)
+                    : getString(R.string.import_done, Ui.plural(this, R.plurals.packs_count, packs),
+                    Ui.plural(this, R.plurals.stickers_count, stickers));
+            if (!failed.isEmpty()) msg += getString(R.string.import_failed_list, String.join("\n", failed));
+            String m = msg;
+            Ui.main(() -> {
+                Ui.dismiss(d);
+                Ui.message(this, getString(R.string.import_title), m);
+                reload();
+            });
+        });
     }
 
     private void importFromApps() {
@@ -233,6 +276,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
+        if (req == REQ_FOLDERS && res == RESULT_OK && data != null && data.getData() != null) {
+            importFolders(data.getData());
+            return;
+        }
         if (req != REQ_IMPORT || res != RESULT_OK || data == null) return;
         List<Uri> uris = new ArrayList<>();
         if (data.getClipData() != null) {

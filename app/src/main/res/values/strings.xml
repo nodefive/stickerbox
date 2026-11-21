@@ -37,6 +37,9 @@
     <string name="delete_pack_body">The pack and all its images are deleted from StickerBox. WhatsApp keeps its own copy until you remove the pack there.</string>
     <string name="chip_added">In WhatsApp</string>
     <string name="chip_update">Update</string>
+    <string name="import_folders">Folders of images</string>
+    <string name="import_folders_summary">One pack per folder, named after it, images in file name order</string>
+    <string name="import_folders_none">No images found in that folder or its subfolders.</string>
     <string name="import_wastickers">.wastickers files</string>
     <string name="import_title">Import</string>
     <string name="import_file_summary">Pack files from sticker apps; pick one or several</string>

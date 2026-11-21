@@ -41,7 +41,51 @@ final class AnimatedWebp {
 
     /** Returns WhatsApp-ready bytes, or null when no setting gets the sticker under the limit. */
     static byte[] fit(File f) throws IOException {
-        Source src = parse(Files.readAllBytes(f.toPath()));
+        return fit(parse(Files.readAllBytes(f.toPath())));
+    }
+
+    /**
+     * An animated GIF as a WhatsApp-ready animated WebP, or null when it is not animated or does
+     * not fit. android.graphics.Movie renders the GIF at any time; sampling it every 10 ms (the
+     * GIF delay unit) and merging identical pictures gives back the frames and their delays.
+     */
+    @SuppressWarnings("deprecation")
+    static byte[] fromGif(File f) throws IOException {
+        byte[] bytes = Files.readAllBytes(f.toPath());
+        android.graphics.Movie movie = android.graphics.Movie.decodeByteArray(bytes, 0, bytes.length);
+        if (movie == null || movie.width() <= 0 || movie.height() <= 0 || movie.duration() <= 0) return null;
+        Source s = new Source();
+        s.width = movie.width();
+        s.height = movie.height();
+        int end = Math.min(movie.duration(), MAX_DURATION);
+        Bitmap prev = null;
+        SrcFrame last = null;
+        for (int t = 0; t < end; t += 10) {
+            Bitmap cur = Bitmap.createBitmap(s.width, s.height, Bitmap.Config.ARGB_8888);
+            movie.setTime(t);
+            movie.draw(new Canvas(cur), 0, 0);
+            if (prev != null && cur.sameAs(prev)) {
+                last.duration += 10;
+                cur.recycle();
+                continue;
+            }
+            if (prev != null) prev.recycle();
+            prev = cur;
+            last = new SrcFrame();
+            last.w = s.width;
+            last.h = s.height;
+            last.duration = 10;
+            last.noBlend = true;
+            ByteArrayOutputStream enc = new ByteArrayOutputStream();
+            cur.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 100, enc);
+            last.webp = enc.toByteArray();
+            s.frames.add(last);
+        }
+        if (prev != null) prev.recycle();
+        return fit(s);
+    }
+
+    private static byte[] fit(Source src) throws IOException {
         if (src.frames.size() < 2) return null;
         byte[] first = encode(src, 1, 75);
         if (first == null) return null;

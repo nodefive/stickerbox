@@ -32,6 +32,7 @@ final class Images {
     static final class Info {
         boolean webp;
         boolean png;
+        boolean gif;
         boolean animated;
         int width;
         int height;
@@ -60,6 +61,10 @@ final class Images {
             if (in.read(h) < 12) return info;
             if ((h[0] & 0xFF) == 0x89 && h[1] == 'P' && h[2] == 'N' && h[3] == 'G') {
                 info.png = true;
+                return info;
+            }
+            if (h[0] == 'G' && h[1] == 'I' && h[2] == 'F' && h[3] == '8') {
+                info.gif = true;
                 return info;
             }
             if (!(h[0] == 'R' && h[1] == 'I' && h[2] == 'F' && h[3] == 'F'
