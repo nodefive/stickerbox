@@ -60,6 +60,14 @@ WhatsApp sticker app, the built copies can be read by any app that requests it. 
 pack, the app shows that WhatsApp has the previous version until you tap
 **Update in WhatsApp**.
 
+### Pack order in WhatsApp
+
+WhatsApp decides the order of its sticker tray, not the sticker app: a pack it has not seen
+before goes on top, and it remembers each pack's place, even after the pack is removed and added
+again. To add packs in the app's order, add them from the last to the first. To change the
+order later, open a chat, the sticker panel, the **+** store icon at the end of the pack row,
+then **Your stickers**, and drag the packs by their handle. The order you set there stays.
+
 ### Importing from other sticker apps
 
 Every WhatsApp sticker app offers its packs through the same provider interface, so StickerBox
@@ -159,8 +167,10 @@ own key. The key never goes into the repository: `.gitignore` excludes `*.jks`, 
    ```
    scripts/sign-release.sh    # dist/stickerbox-<version>.apk
    ```
-   apksigner asks for the keystore password, then prints the certificate and the APK
-   checksum.
+   The script asks for the keystore password once and checks it with keytool before it
+   builds, so a typo stops it at once. It then signs, and prints the certificate and the APK
+   checksum. The password is passed to keytool and apksigner through their environment only
+   and is never written anywhere.
 
 An APK signed with your key cannot be installed over one signed with another key (such as the
 release from this page). Back up your packs in **Settings**, uninstall the other build, install

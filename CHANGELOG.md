@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3
+
+- Packs are offered to WhatsApp in a fixed order. WhatsApp keeps its own order of the sticker
+  tray (see "Pack order in WhatsApp" in the README).
+- `scripts/sign-release.sh` asks for the keystore password once, checks it with keytool and
+  then signs, instead of using apksigner's own prompt.
+
 ## 1.2
 
 - Import folders of images: pick a folder and each subfolder becomes a pack named after it
