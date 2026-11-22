@@ -286,14 +286,34 @@ final class PackBuilder {
         cachedStamp = f.lastModified();
     }
 
-    /** Every built part, for WhatsApp's metadata query. */
-    static synchronized List<Part> allParts(Context c) {
+    /**
+     * Every built part, for WhatsApp's metadata query, in a fixed order: the app's pack list
+     * (parts of a pack in part order), reversed. WhatsApp does not use this order for its sticker
+     * tray: it puts a newly added pack on top and remembers each pack's place, even after the
+     * pack is removed, until the user drags it elsewhere.
+     */
+    static List<Part> allParts(Context c) {
+        // Read the pack order before taking this class's lock: Store calls into PackBuilder
+        // while holding its own lock.
+        List<String> order = new ArrayList<>();
+        for (Store.Pack p : Store.all(c)) order.add(p.id);
+        List<Part> out = builtParts(c, order);
+        java.util.Collections.reverse(out);
+        return out;
+    }
+
+    private static synchronized List<Part> builtParts(Context c, List<String> order) {
         List<Part> out = new ArrayList<>();
         JSONObject packs = readIndex(c).optJSONObject("packs");
         if (packs == null) return out;
+        java.util.Set<String> done = new java.util.HashSet<>();
+        for (String id : order) {
+            if (packs.has(id) && done.add(id)) out.addAll(parts(c, id));
+        }
+        // built packs the list does not know (should not happen): keep them, after the rest
         for (java.util.Iterator<String> it = packs.keys(); it.hasNext(); ) {
-            String packId = it.next();
-            out.addAll(parts(c, packId));
+            String id = it.next();
+            if (done.add(id)) out.addAll(parts(c, id));
         }
         return out;
     }
